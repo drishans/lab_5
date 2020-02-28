@@ -185,13 +185,40 @@ function loadStatsPage() {
 					  avg_r_yards   - the average number of rushing yards for the player's Buff career
 					  avg_rec_yards - the average number of receiving yards for the player's Buff career
 */
-function loadPlayersPage() {
-    document.getElementById("player_selector").addEventListener(onclic);
-//<a href="#" onclick="switchPlayers(i)">players[i].name</a>
-    player_selector.add()
+
+function loadPlayersPage()
+{
+    for(let i = 0; i < players.length; i++)
+    {
+        const ddl = document.getElementById("player_selector");
+        const aTag = document.createElement("a");
+        aTag.setAttribute("class", "dropdown-item");
+        aTag.setAttribute("href","#");
+        aTag.innerText = players[i].name;
+        ddl.appendChild(aTag);
+        aTag.onclick = function(){switchPlayers(i)};
+    }
 
 }
 
-function switchPlayers(playerNum) {
+function switchPlayers(playerNum)
+{
+    let average_pass = players[playerNum].pass_yards / players[playerNum].games_played;
+    let average_rush = players[playerNum].rushing_yards / players[playerNum].games_played;
+    let average_rec = players[playerNum].receiving_yards / players[playerNum].games_played;
 
+    document.getElementById("p_year").innerHTML = players[playerNum].year;
+    document.getElementById("p_major").innerHTML = players[playerNum].major;
+    document.getElementById("g_played").innerHTML = players[playerNum].games_played;
+
+    document.getElementById("player_img").src = players[playerNum].img;
+    document.getElementById("player_img").alt = players[playerNum].alt;
+
+    document.getElementById("p_yards").innerHTML = players[playerNum].pass_yards;
+    document.getElementById("r_yards").innerHTML = players[playerNum].rushing_yards;
+    document.getElementById("rec_yards").innerHTML = players[playerNum].receiving_yards;
+
+    document.getElementById("avg_p_yards").innerHTML = Math.round(average_pass).toString();
+    document.getElementById("avg_r_yards").innerHTML = Math.round(average_rush).toString();
+    document.getElementById("avg_rec_yards").innerHTML = Math.round(average_rec).toString();
 }
